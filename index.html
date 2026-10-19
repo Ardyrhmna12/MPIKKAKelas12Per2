@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITAL PORTFOLIO LAB - Design Your Professional Identity</title>
+    <style>
+        :root {
+            --bg-main: #030611;
+            --bg-sec: #071126;
+            --panel: #0B1630;
+            --cyan: #00E5FF;
+            --blue: #246BFD;
+            --violet: #8B5CFF;
+            --magenta: #FF43D1;
+            --text-main: #F4F7FF;
+            --text-sec: #9EACC8;
+            --glass-bg: rgba(11, 22, 48, 0.6);
+            --glass-border: rgba(0, 229, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background-image: 
+                linear-gradient(rgba(3, 6, 17, 0.9), rgba(3, 6, 17, 0.9)),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+        }
+
+        #sidebar {
+            width: 280px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .logo-area {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
+            margin-bottom: 10px;
+            display: inline-block;
+            border: 2px solid var(--cyan);
+            border-radius: 8px;
+            padding: 5px 15px;
+        }
+
+        .logo-title {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+
+        .logo-subtitle {
+            font-size: 10px;
+            color: var(--magenta);
+            letter-spacing: 2px;
+        }
+
+        .teacher-profile {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            background: linear-gradient(90deg, transparent, rgba(36, 107, 253, 0.1), transparent);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 15px var(--blue);
+            border: 2px solid var(--cyan);
+        }
+
+        .teacher-info h4 { font-size: 14px; margin: 0; }
+        .teacher-info p { font-size: 10px; color: var(--text-sec); margin: 0; }
+
+        nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 0;
+        }
+
+        nav::-webkit-scrollbar { width: 5px; }
+        nav::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 5px; }
+
+        .nav-link {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-sec);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--cyan);
+            background: rgba(0, 229, 255, 0.1);
+            border-left-color: var(--cyan);
+            text-shadow: 0 0 5px var(--cyan);
+        }
+
+        .progress-container {
+            padding: 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .progress-bar-bg {
+            height: 8px;
+            background: var(--bg-sec);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue), var(--cyan));
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--cyan);
+        }
+
+        #main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            position: relative;
+        }
+        
+        #main-content::-webkit-scrollbar { width: 8px; }
+        #main-content::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 5px; }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2, h3 { margin-bottom: 20px; font-weight: 600; }
+        h1 { color: var(--cyan); text-shadow: 0 0 10px rgba(0,229,255,0.3); font-size: 2.5rem;}
+        h2 { color: var(--violet); font-size: 1.8rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;}
+        p { line-height: 1.6; margin-bottom: 15px; color: var(--text-sec); }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn {
+            background: transparent;
+            color: var(--cyan);
+            border: 1px solid var(--cyan);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: var(--cyan);
+            color: var(--bg-main);
+            box-shadow: 0 0 15px var(--cyan);
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: white;
+            border: none;
+        }
+        .btn-primary:hover {
+            background: #1a54c9;
+            box-shadow: 0 0 15px var(--blue);
+            color: white;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            border-radius: 8px;
+            font-family: inherit;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 8px rgba(0,229,255,0.3);
+        }
+
+        /* Grid Layouts */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        /* Wireframe Lab specific */
+        .wireframe-canvas {
+            background: white;
+            color: black;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 400px;
+            transition: width 0.3s ease;
+            margin: 0 auto;
+        }
+        .wf-mobile { width: 375px; }
+        .wf-desktop { width: 100%; }
+        
+        .wf-block {
+            border: 2px dashed #ccc;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+        }
+        .wf-controls button {
+            background: #ddd; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; margin-left: 5px;
+        }
+
+        /* Portfolio Preview Form */
+        #portfolio-preview-area {
+            background: white;
+            color: #333;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        .pv-header { text-align: center; margin-bottom: 30px; }
+        .pv-section { margin-bottom: 25px; }
+        .pv-card { background: #f0f4f8; padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+
+        /* Custom Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--blue);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: bottom 0.4s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #toast.show { bottom: 30px; }
+
+        /* Responsive Mobile Toggle */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 200;
+            background: var(--panel);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                position: fixed;
+                left: -280px;
+                height: 100vh;
+            }
+            #sidebar.open { left: 0; }
+            .mobile-toggle { display: block; }
+            .grid-2 { grid-template-columns: 1fr; }
+            #main-content { padding: 60px 20px 20px 20px; }
+        }
+
+        /* Print Styles */
+        @media print {
+            body * { visibility: hidden; }
+            #portfolio-builder-page, #portfolio-builder-page * { visibility: visible; }
+            .no-print { display: none !important; }
+            #portfolio-preview-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="mobile-toggle" onclick="toggleSidebar()">☰ Menu</button>
+    
+    <aside id="sidebar">
+        <div class="logo-area">
+            <div class="logo-icon">DP</div>
+            <div class="logo-title">DIGITAL PORTFOLIO LAB</div>
+            <div class="logo-subtitle">INTERACTIVE LEARNING MODULE</div>
+        </div>
+        
+        <div class="teacher-profile">
+            <div class="avatar">AR</div>
+            <div class="teacher-info">
+                <h4>Ardi Rohmana, S.Kom.</h4>
+                <p>GURU SMK IT NUR ANTIKA</p>
+                <p style="font-size: 9px; color: var(--cyan); margin-top:3px;">KELAS XII TKJ</p>
+            </div>
+        </div>
+
+        <nav id="nav-menu">
+            <a class="nav-link active" onclick="nav('home')">🏠 Beranda</a>
+            <a class="nav-link" onclick="nav('objectives')">🎯 Tujuan Pembelajaran</a>
+            <a class="nav-link" onclick="nav('materials')">📚 Materi</a>
+            <a class="nav-link" onclick="nav('analysis')">🔍 Analisis Portofolio</a>
+            <a class="nav-link" onclick="nav('builder')">🛠️ Portfolio Builder</a>
+            <a class="nav-link" onclick="nav('wireframe')">📐 Wireframe Lab</a>
+            <a class="nav-link" onclick="nav('ai')">🤖 AI Content Assistant</a>
+            <a class="nav-link" onclick="nav('quiz')">📝 Kuis</a>
+            <a class="nav-link" onclick="nav('reflection')">💡 Refleksi</a>
+            <a class="nav-link" onclick="nav('summary')">📋 Rangkuman</a>
+            <a class="nav-link" onclick="nav('about')">ℹ️ Tentang Media</a>
+        </nav>
+
+        <div class="progress-container">
+            <div style="display: flex; justify-content: space-between; font-size: 12px;">
+                <span>Progres Belajar</span>
+                <span id="progress-text">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-fill" id="progress-bar"></div>
+            </div>
+        </div>
+    </aside>
+
+    <main id="main-content">
+        
+        <!-- PAGE: HOME -->
+        <section id="home" class="page active">
+            <div class="card" style="text-align: center; padding: 50px 20px; background: linear-gradient(135deg, rgba(11,22,48,0.8), rgba(0,229,255,0.1)); border: 2px solid var(--cyan);">
+                <h1 style="font-size: 3rem; margin-bottom: 10px;">BUILD YOUR DIGITAL IDENTITY</h1>
+                <p style="font-size: 1.2rem; color: var(--text-main); max-width: 700px; margin: 0 auto 30px;">
+                    "Rancang portofolio profesional yang menunjukkan kemampuan, karya, dan potensi dirimu melalui struktur konten yang jelas dan meyakinkan."
+                </p>
+                
+                <!-- Holographic SVG Illustration -->
+                <div style="margin: 30px auto; width: 200px; height: 150px;">
+                    <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                        </defs>
+                        <rect x="20" y="20" width="160" height="100" rx="10" fill="none" stroke="#00E5FF" stroke-width="2" filter="url(#glow)"/>
+                        <line x1="20" y1="40" x2="180" y2="40" stroke="#00E5FF" stroke-width="2"/>
+                        <circle cx="40" cy="30" r="3" fill="#FF43D1"/>
+                        <circle cx="50" cy="30" r="3" fill="#FF43D1"/>
+                        <rect x="30" y="55" width="40" height="40" rx="5" fill="none" stroke="#246BFD" stroke-width="2"/>
+                        <rect x="80" y="55" width="80" height="10" rx="2" fill="#8B5CFF" opacity="0.7"/>
+                        <rect x="80" y="75" width="60" height="5" rx="2" fill="#9EACC8" opacity="0.5"/>
+                        <rect x="80" y="85" width="70" height="5" rx="2" fill="#9EACC8" opacity="0.5"/>
+                    </svg>
+                </div>
+
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="nav('objectives')">Mulai Belajar 🚀</button>
+                    <button class="btn" onclick="nav('builder')">Buka Portfolio Builder 🛠️</button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Informasi Pembelajaran</h3>
+                    <ul style="list-style: none; color: var(--text-sec);">
+                        <li><strong>Pertemuan:</strong> 2</li>
+                        <li><strong>Materi:</strong> Perancangan Struktur & Konten Portofolio Digital</li>
+                        <li><strong>Alokasi Waktu:</strong> 2 JP × 45 menit = 90 menit</li>
+                        <li><strong>Penting:</strong> Hasil akhir pembelajaran ini adalah rancangan portofolio dan wireframe, bukan website final.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Panduan Waktu (90 Menit)</h3>
+                    <ul style="list-style: none; color: var(--text-sec); font-size: 14px; line-height: 1.8;">
+                        <li>⏱️ 10 mnt - Pembukaan</li>
+                        <li>⏱️ 15 mnt - Memahami materi</li>
+                        <li>⏱️ 15 mnt - Demonstrasi Analisis</li>
+                        <li>⏱️ 30 mnt - Praktik Builder & Wireframe</li>
+                        <li>⏱️ 10 mnt - Tinjauan karya</li>
+                        <li>⏱️ 10 mnt - Refleksi & Penutup</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: OBJECTIVES -->
+        <section id="objectives" class="page">
+            <h2>🎯 Tujuan Pembelajaran</h2>
+            <div class="card">
+                <p>Setelah mengikuti pembelajaran ini, siswa SMK IT Nur Antika diharapkan mampu:</p>
+                <ol style="margin-left: 20px; line-height: 1.8; color: var(--text-main);">
+                    <li>Memahami bagian utama portofolio digital profesional.</li>
+                    <li>Menentukan target audiens yang spesifik.</li>
+                    <li>Menyusun profil dan keterampilan secara profesional.</li>
+                    <li>Merencanakan minimal dua proyek/karya relevan (misal: proyek TKJ/Jaringan).</li>
+                    <li>Membuat wireframe sederhana untuk website portofolio.</li>
+                    <li>Menggunakan asisten AI secara kritis dan etis untuk penulisan konten.</li>
+                </ol>
+            </div>
+            
+            <h3>Kriteria Keberhasilan</h3>
+            <div class="grid-2">
+                <div class="card" style="border-left: 4px solid var(--cyan);">✅ Tujuan dan audiens jelas.</div>
+                <div class="card" style="border-left: 4px solid var(--cyan);">✅ Minimal 5 bagian portofolio tersusun.</div>
+                <div class="card" style="border-left: 4px solid var(--cyan);">✅ Ada rencana minimal 2 proyek.</div>
+                <div class="card" style="border-left: 4px solid var(--cyan);">✅ Wireframe memiliki hierarki informasi.</div>
+                <div class="card" style="border-left: 4px solid var(--cyan);">✅ Konten akurat, tanpa klaim palsu.</div>
+            </div>
+            <button class="btn btn-primary" onclick="nav('materials')" style="margin-top: 20px;">Lanjut ke Materi ➔</button>
+        </section>
+
+        <!-- PAGE: MATERIALS -->
+        <section id="materials" class="page">
+            <h2>📚 Materi Pembelajaran</h2>
+            
+            <div class="card mat-card" id="mat1">
+                <h3>A. Pengertian Portofolio Digital</h3>
+                <p>Portofolio digital adalah kumpulan karya, keterampilan, dan informasi profesional yang disajikan secara digital untuk menunjukkan kemampuan seseorang kepada pihak lain.</p>
+                <p><strong>Beda CV dan Portofolio:</strong><br>
+                - <strong>CV:</strong> Merangkum riwayat pendidikan, pengalaman, dan keterampilan secara singkat (biasanya 1-2 halaman teks).<br>
+                - <strong>Portofolio:</strong> Menunjukkan *bukti* karya, proses, peran, dan hasil pekerjaan secara visual dan mendetail.</p>
+                <button class="btn" onclick="markDone('mat1')">Tandai Selesai</button>
+            </div>
+
+            <div class="card mat-card" id="mat2">
+                <h3>B. Tujuan dan Target Audiens</h3>
+                <p>Sebelum membuat portofolio, tentukan siapa yang akan melihatnya. Target audiens memengaruhi gaya bahasa, urutan informasi, dan karya yang ditampilkan.</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li>Melamar kerja (Audiens: HRD, Manajer IT)</li>
+                    <li>Mencari tempat magang (Audiens: Pembimbing Industri)</li>
+                    <li>Menampilkan proyek sekolah (Audiens: Guru, Penguji UKK)</li>
+                    <li>Menawarkan jasa freelance (Audiens: Klien)</li>
+                </ul>
+                <button class="btn" onclick="markDone('mat2')">Tandai Selesai</button>
+            </div>
+
+            <div class="card mat-card" id="mat3">
+                <h3>C. Struktur Portofolio Profesional</h3>
+                <p>Struktur umum yang logis terdiri dari:</p>
+                <ul style="margin-left: 20px; margin-bottom: 15px;">
+                    <li><strong>Hero/Beranda:</strong> Nama, bidang minat, ringkasan singkat.</li>
+                    <li><strong>Tentang Saya:</strong> Bio singkat yang faktual.</li>
+                    <li><strong>Keterampilan:</strong> Kemampuan teknis (Hardware, Jaringan, Coding) yang dikuasai.</li>
+                    <li><strong>Proyek/Karya:</strong> Bukti nyata hasil belajar atau kerja.</li>
+                    <li><strong>Kontak:</strong> Email/LinkedIn profesional.</li>
+                </ul>
+                <button class="btn" onclick="markDone('mat3')">Tandai Selesai</button>
+            </div>
+
+            <div class="card mat-card" id="mat4">
+                <h3>D. Menulis Profil & Etika Digital</h3>
+                <p><strong>Rumus Bio:</strong> Siapa dirimu? Bidang apa yang diminati? Keterampilan apa yang dimiliki? Apa tujuanmu?</p>
+                <p><strong>Etika:</strong> Jangan cantumkan data sensitif (NIK, Alamat lengkap), gunakan karya sendiri, jangan mengarang keahlian, dan periksa ulang teks hasil generate AI.</p>
+                <button class="btn" onclick="markDone('mat4')">Tandai Selesai</button>
+            </div>
+            
+            <button class="btn btn-primary" onclick="nav('analysis')">Lanjut ke Analisis ➔</button>
+        </section>
+
+        <!-- PAGE: ANALYSIS -->
+        <section id="analysis" class="page">
+            <h2>🔍 Portfolio Detective</h2>
+            <p>Bandingkan dua simulasi struktur portofolio di bawah ini. Analisis kelemahan pada Contoh B.</p>
+            
+            <div class="grid-2">
+                <div class="card" style="border-color: #00FF00; background: rgba(0,255,0,0.05);">
+                    <h3 style="color: #00FF00;">Contoh A (Efektif)</h3>
+                    <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 5px; font-size: 12px; font-family: monospace;">
+                        <strong>[HERO]</strong><br>
+                        Budi Santoso - Junior Network Admin<br>
+                        <strong>[TENTANG]</strong><br>
+                        Siswa TKJ dengan minat pada routing & switching.<br>
+                        <strong>[SKILL]</strong><br>
+                        MikroTik, Cisco, Troubleshooting.<br>
+                        <strong>[PROYEK]</strong><br>
+                        Setup Hotspot Sekolah (Tujuan, Peran, Hasil).<br>
+                        <strong>[KONTAK]</strong><br>
+                        budi@email.com
+                    </div>
+                </div>
+
+                <div class="card" style="border-color: #FF4444; background: rgba(255,0,0,0.05);">
+                    <h3 style="color: #FF4444;">Contoh B (Kurang Efektif)</h3>
+                    <div style="background: rgba(255,255,255,0.1); padding: 10px; border-radius: 5px; font-size: 12px; font-family: monospace;">
+                        <strong>[HERO]</strong><br>
+                        The Dark Hacker 99<br>
+                        <strong>[TENTANG]</strong><br>
+                        Saya suka main game dan kadang config router. Rumah saya di Jl. Mawar No 5, RT 2. Golongan darah O.<br>
+                        <strong>[SKILL]</strong><br>
+                        Hacking NASA, HTML, Tidur.<br>
+                        <strong>[PROYEK]</strong><br>
+                        Gambar_Router.jpg (Tanpa penjelasan)<br>
+                        <strong>[KONTAK]</strong><br>
+                        Halaman 5 form...
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Apa masalah pada Contoh B? (Pilih yang sesuai)</h3>
+                <label style="display: block; margin-bottom: 10px;"><input type="checkbox" id="chk1" value="profil"> Nama/Profil tidak profesional</label>
+                <label style="display: block; margin-bottom: 10px;"><input type="checkbox" id="chk2" value="privasi"> Terlalu banyak data pribadi sensitif</label>
+                <label style="display: block; margin-bottom: 10px;"><input type="checkbox" id="chk3" value="skill"> Klaim keahlian palsu/tidak relevan</label>
+                <label style="display: block; margin-bottom: 10px;"><input type="checkbox" id="chk4" value="proyek"> Proyek tidak memiliki deskripsi jelas</label>
+                <label style="display: block; margin-bottom: 10px;"><input type="checkbox" id="chk5" value="warna"> Warnanya terlalu gelap (Pengecoh)</label>
+                
+                <button class="btn btn-primary" onclick="checkAnalysis()" style="margin-top: 15px;">Periksa Analisis</button>
+                <div id="analysis-result" style="margin-top: 15px; font-weight: bold; color: var(--cyan);"></div>
+            </div>
+        </section>
+
+        <!-- PAGE: BUILDER -->
+        <section id="builder" class="page">
+            <h2>🛠️ Portfolio Builder</h2>
+            <p>Isi form di bawah ini untuk merancang konten portofoliomu. Preview akan muncul secara langsung.</p>
+            
+            <div class="grid-2 no-print">
+                <!-- FORM -->
+                <div class="card" style="max-height: 600px; overflow-y: auto;">
+                    <h3>Formulir Konten</h3>
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="b-nama" placeholder="Cth: Ardi Rohmana" onkeyup="updatePreview()">
+                    
+                    <label>Bidang Minat / Peran</label>
+                    <input type="text" id="b-peran" placeholder="Cth: Junior Network Engineer" onkeyup="updatePreview()">
+                    
+                    <label>Deskripsi Singkat (Bio)</label>
+                    <textarea id="b-bio" rows="3" placeholder="Ceritakan siapa dirimu dan apa fokusmu..." onkeyup="updatePreview()"></textarea>
+                    
+                    <label>Keterampilan Utama (Pisahkan koma)</label>
+                    <input type="text" id="b-skill" placeholder="Cth: Konfigurasi MikroTik, LAN, Linux" onkeyup="updatePreview()">
+                    
+                    <hr style="border-color: var(--glass-border); margin: 20px 0;">
+                    
+                    <h4>Proyek 1</h4>
+                    <input type="text" id="b-p1-nama" placeholder="Nama Proyek" onkeyup="updatePreview()">
+                    <textarea id="b-p1-desc" rows="2" placeholder="Tujuan, Peran, Proses, Hasil" onkeyup="updatePreview()"></textarea>
+                    
+                    <hr style="border-color: var(--glass-border); margin: 20px 0;">
+                    
+                    <h4>Proyek 2</h4>
+                    <input type="text" id="b-p2-nama" placeholder="Nama Proyek" onkeyup="updatePreview()">
+                    <textarea id="b-p2-desc" rows="2" placeholder="Tujuan, Peran, Proses, Hasil" onkeyup="updatePreview()"></textarea>
+                    
+                    <label>Kontak Profesional</label>
+                    <input type="text" id="b-kontak" placeholder="Email atau LinkedIn" onkeyup="updatePreview()">
+
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="saveBuilder()">💾 Simpan Lokal</button>
+                        <button class="btn" onclick="window.print()">🖨️ Cetak PDF</button>
+                        <button class="btn" onclick="resetBuilder()" style="border-color: #FF4444; color: #FF4444;">Reset</button>
+                    </div>
+                </div>
+
+                <!-- PREVIEW -->
+                <div class="card">
+                    <h3>Live Preview</h3>
+                    <div id="portfolio-preview-area">
+                        <div class="pv-header">
+                            <h1 id="pv-nama" style="color: #333; font-size: 24px; margin: 0;">Nama Kamu</h1>
+                            <p id="pv-peran" style="color: #666; font-size: 16px;">Bidang Minat Profesional</p>
+                        </div>
+                        
+                        <div class="pv-section">
+                            <h3 style="color: #222; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom:5px;">Tentang Saya</h3>
+                            <p id="pv-bio" style="color: #444; font-size: 14px;">Deskripsi singkat akan muncul di sini.</p>
+                        </div>
+
+                        <div class="pv-section">
+                            <h3 style="color: #222; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom:5px;">Keahlian</h3>
+                            <p id="pv-skill" style="color: #444; font-size: 14px;">Skill 1, Skill 2</p>
+                        </div>
+
+                        <div class="pv-section">
+                            <h3 style="color: #222; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom:5px;">Proyek / Karya</h3>
+                            <div class="pv-card">
+                                <h4 id="pv-p1-nama" style="color: #222;">Judul Proyek 1</h4>
+                                <p id="pv-p1-desc" style="color: #555; font-size: 13px;">Deskripsi, proses, dan hasil proyek 1.</p>
+                            </div>
+                            <div class="pv-card">
+                                <h4 id="pv-p2-nama" style="color: #222;">Judul Proyek 2</h4>
+                                <p id="pv-p2-desc" style="color: #555; font-size: 13px;">Deskripsi, proses, dan hasil proyek 2.</p>
+                            </div>
+                        </div>
+
+                        <div class="pv-section">
+                            <h3 style="color: #222; font-size: 18px; border-bottom: 2px solid #ccc; padding-bottom:5px;">Kontak</h3>
+                            <p id="pv-kontak" style="color: #444; font-size: 14px;">kontak@email.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: WIREFRAME LAB -->
+        <section id="wireframe" class="page">
+            <h2>📐 Wireframe Lab</h2>
+            <p>Wireframe adalah kerangka dasar website. Susun urutan bagian portofoliomu. Klik Atas/Bawah untuk memindahkan blok.</p>
+            
+            <div style="margin-bottom: 20px;" class="no-print">
+                <button class="btn" onclick="setWireframeView('desktop')">💻 Desktop View</button>
+                <button class="btn" onclick="setWireframeView('mobile')">📱 Mobile View</button>
+                <button class="btn btn-primary" onclick="checkWireframeStructure()" style="margin-left: 20px;">✓ Periksa Struktur</button>
+            </div>
+
+            <div class="card" style="background: #e9ecef;">
+                <div id="wf-container" class="wireframe-canvas wf-desktop">
+                    <!-- Blocks injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: AI CONTENT ASSISTANT -->
+        <section id="ai" class="page">
+            <h2>🤖 AI Content Assistant (Simulasi)</h2>
+            <div class="card" style="border-left: 4px solid #FF43D1; background: rgba(255, 67, 209, 0.05);">
+                <p><strong>Peringatan:</strong> Ini adalah simulasi asisten penulisan berbasis template lokal. Selalu periksa dan edit semua hasil (jangan asal copy-paste) agar sesuai dengan kemampuan nyata Anda dan bebas dari data sensitif.</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Input Data</h3>
+                    <label>Pilih Tugas</label>
+                    <select id="ai-task">
+                        <option value="bio">Buat Draf Bio Profesional</option>
+                        <option value="project">Perjelas Deskripsi Proyek</option>
+                    </select>
+
+                    <label>Informasi Kamu / Proyek (Kata Kunci)</label>
+                    <textarea id="ai-input" rows="4" placeholder="Cth: Nama saya Andi, TKJ, suka jaringan. Skill Mikrotik. Proyek pernah setting hotspot lab sekolah..."></textarea>
+                    
+                    <button class="btn btn-primary" onclick="generateAIText()">✨ Generate Draf</button>
+                </div>
+
+                <div class="card">
+                    <h3>Hasil (Edit Sebelum Dipakai!)</h3>
+                    <textarea id="ai-output" rows="8" style="background: rgba(0,229,255,0.05);"></textarea>
+                    
+                    <div style="margin-top: 10px;">
+                        <input type="checkbox" id="ai-chk1"> <label for="ai-chk1" style="font-size: 12px;">Informasi benar & tidak berlebihan</label><br>
+                        <input type="checkbox" id="ai-chk2"> <label for="ai-chk2" style="font-size: 12px;">Tidak ada data pribadi sensitif</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: QUIZ -->
+        <section id="quiz" class="page">
+            <h2>📝 Kuis Evaluasi</h2>
+            <div id="quiz-container" class="card">
+                <!-- Quiz dynamically loaded here -->
+            </div>
+        </section>
+
+        <!-- PAGE: REFLECTION -->
+        <section id="reflection" class="page">
+            <h2>💡 Refleksi Belajar</h2>
+            <div class="card">
+                <label>Apa tujuan portofolio digital yang ingin kamu buat?</label>
+                <textarea id="ref1" rows="2"></textarea>
+
+                <label>Bagian mana yang menurutmu paling sulit dirancang?</label>
+                <textarea id="ref2" rows="2"></textarea>
+
+                <label>Bagaimana kamu memastikan konten tetap jujur jika dibantu AI?</label>
+                <textarea id="ref3" rows="2"></textarea>
+
+                <label>Seberapa siap kamu mengembangkan ini menjadi website asli? (1-4)</label>
+                <select id="ref-scale">
+                    <option value="1">1 - Belum siap, butuh banyak belajar</option>
+                    <option value="2">2 - Cukup siap, tapi butuh panduan</option>
+                    <option value="3">3 - Siap, paham konsep dasarnya</option>
+                    <option value="4">4 - Sangat siap dan percaya diri</option>
+                </select>
+
+                <button class="btn btn-primary" onclick="saveReflection()">Simpan Refleksi</button>
+            </div>
+        </section>
+
+        <!-- PAGE: SUMMARY -->
+        <section id="summary" class="page">
+            <h2>📋 Rangkuman & Checklist Akhir</h2>
+            <div class="card">
+                <ul style="line-height: 1.8; color: var(--text-main); margin-left: 20px;">
+                    <li>Portofolio adalah bukti kemampuan melalui karya nyata.</li>
+                    <li>Tujuan dan audiens menentukan isi dan bahasa.</li>
+                    <li>Struktur dasar: Hero, Tentang, Skill, Proyek, Kontak.</li>
+                    <li>Wireframe merencanakan tata letak sebelum coding.</li>
+                    <li>Privasi dan kejujuran adalah etika utama.</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>Checklist Persiapan Website</h3>
+                <label style="display:block;"><input type="checkbox" class="final-check"> Tujuan dan audiens ditentukan</label>
+                <label style="display:block;"><input type="checkbox" class="final-check"> Struktur portofolio direncanakan (Wireframe)</label>
+                <label style="display:block;"><input type="checkbox" class="final-check"> Konten profil & proyek disiapkan</label>
+                <label style="display:block;"><input type="checkbox" class="final-check"> Bebas dari informasi sensitif</label>
+                <br>
+                <button class="btn btn-primary" onclick="finishCourse()">Selesaikan Modul 🎉</button>
+            </div>
+        </section>
+
+        <!-- PAGE: ABOUT -->
+        <section id="about" class="page">
+            <div class="card" style="text-align: center;">
+                <h1 style="font-size: 2rem;">DIGITAL PORTFOLIO LAB</h1>
+                <p style="color: var(--cyan);">Media Pembelajaran Interaktif Koding dan Kecerdasan Artifisial</p>
+                <hr style="border-color: var(--glass-border); margin: 20px 0;">
+                <p><strong>Kelas:</strong> XII TKJ — Pertemuan 2</p>
+                <p><strong>Instansi:</strong> SMK IT Nur Antika</p>
+                <p><strong>Pengajar:</strong> Ardi Rohmana, S.Kom.</p>
+                <br>
+                <p style="font-size: 12px; color: var(--text-sec);">Media ini dibangun murni menggunakan HTML5, CSS3, dan Vanilla JavaScript tanpa framework eksternal untuk keperluan edukasi dan berjalan sepenuhnya di sisi klien (Client-side).</p>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="toast">Notifikasi</div>
+
+    <script>
+        // --- STATE & DATA ---
+        let progress = 0;
+        let completedSteps = new Set();
+        
+        let wireframeBlocks = [
+            { id: 'wf-nav', name: 'Navigation Bar' },
+            { id: 'wf-hero', name: 'Hero (Nama & Judul)' },
+            { id: 'wf-about', name: 'Tentang Saya (Bio)' },
+            { id: 'wf-skills', name: 'Keterampilan (Skills)' },
+            { id: 'wf-projects', name: 'Proyek / Karya' },
+            { id: 'wf-contact', name: 'Kontak' },
+            { id: 'wf-footer', name: 'Footer' }
+        ];
+
+        const quizData = [
+            { q: "Apa fungsi utama dari portofolio digital profesional?", options: ["A. Menyimpan password", "B. Menunjukkan bukti karya dan keterampilan", "C. Bermain game online", "D. Mengedit foto otomatis"], answer: 1, expl: "Portofolio berfungsi membuktikan kemampuan lewat karya nyata." },
+            { q: "Perbedaan utama CV dan Portofolio adalah...", options: ["A. CV berbentuk fisik, portofolio harus PDF", "B. CV merangkum riwayat, portofolio menunjukkan bukti detail karya", "C. Portofolio lebih panjang dari CV", "D. CV tidak butuh foto"], answer: 1, expl: "CV bersifat ringkas (teks), portofolio menyertakan visual dan detail proses karya." },
+            { q: "Mengapa penting menentukan target audiens portofolio?", options: ["A. Agar website cepat loading", "B. Memengaruhi gaya bahasa dan informasi yang ditonjolkan", "C. Supaya dapat nilai A", "D. Agar mudah di-hack"], answer: 1, expl: "HRD butuh informasi cepat, klien butuh bukti hasil. Beda audiens, beda penyajian." },
+            { q: "Bagian yang berisi 'Tujuan, Peran, Tools, Proses, dan Hasil' sebaiknya diletakkan pada...", options: ["A. Kontak", "B. Hero/Beranda", "C. Bagian Proyek/Karya", "D. Footer"], answer: 2, expl: "Deskripsi mendalam sangat diperlukan saat menjelaskan sebuah Proyek/Karya." },
+            { q: "Dalam menulis Bio Profesional, rumus yang baik adalah menjawab pertanyaan berikut, KECUALI...", options: ["A. Siapa dirimu?", "B. Di mana alamat lengkap dan nama ibumu?", "C. Apa keterampilanmu?", "D. Apa tujuan profesionalmu?"], answer: 1, expl: "Alamat lengkap dan data orang tua adalah data sensitif yang tidak boleh disebar." },
+            { q: "Apa kegunaan Wireframe sebelum mulai coding?", options: ["A. Mengatur warna dan animasi", "B. Merancang tata letak dan struktur informasi", "C. Menghapus virus komputer", "D. Membuat koneksi database"], answer: 1, expl: "Wireframe adalah kerangka kasar untuk menyusun urutan layout sebelum masuk desain visual." },
+            { q: "Manakah klaim keterampilan yang BENAR untuk dimasukkan ke portofolio?", options: ["A. 'Ahli Hacking NASA' walau belum pernah", "B. 'Konfigurasi Mikrotik Dasar' berdasarkan praktik di lab sekolah", "C. 'Master HTML' karena pernah buka notepad", "D. 'Ahli semua bahasa pemrograman'"], answer: 1, expl: "Klaim harus jujur, spesifik, dan sesuai kemampuan nyata (faktual)." },
+            { q: "Sikap etis saat menggunakan AI untuk menulis bio adalah...", options: ["A. Copy-paste langsung", "B. Menyuruh AI mengarang pengalaman palsu", "C. Memeriksa, mengedit, dan memastikan isinya sesuai fakta diri sendiri", "D. Tidak peduli dengan isinya"], answer: 2, expl: "AI hanya alat bantu. Tanggung jawab kebenaran isi tetap ada pada penulis." },
+            { q: "Data mana yang AMAN dicantumkan di bagian Kontak publik?", options: ["A. Nomor Induk Kependudukan (NIK)", "B. Email profesional dan link LinkedIn", "C. Foto KTP", "D. Nomor rekening bank"], answer: 1, expl: "Email dan LinkedIn ditujukan untuk komunikasi profesional secara aman." },
+            { q: "Jika kamu membuat proyek kelompok, bagaimana cara menampilkannya di portofolio?", options: ["A. Mengklaim kerja sendirian", "B. Hanya menampilkan gambar tanpa teks", "C. Menjelaskan spesifik bagian/peran apa yang kamu kerjakan dalam kelompok itu", "D. Tidak usah dimasukkan"], answer: 2, expl: "Jujur tentang peran dalam tim menunjukkan integritas dan kerja sama." }
+        ];
+
+        // --- CORE UI FUNCTIONS ---
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.background = isError ? '#FF4444' : 'var(--blue)';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        function nav(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            if(window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+            window.scrollTo(0, 0);
+
+            if(pageId === 'wireframe') renderWireframe();
+            if(pageId === 'quiz' && document.getElementById('quiz-container').innerHTML.trim() === '') renderQuiz();
+        }
+
+        function updateProgress(step) {
+            completedSteps.add(step);
+            let percent = Math.min(100, Math.floor((completedSteps.size / 15) * 100)); // Approx 15 total items
+            document.getElementById('progress-bar').style.width = percent + '%';
+            document.getElementById('progress-text').innerText = percent + '%';
+            
+            try { localStorage.setItem('dp_progress', JSON.stringify(Array.from(completedSteps))); } catch(e) {}
+        }
+
+        function loadProgress() {
+            try {
+                let saved = localStorage.getItem('dp_progress');
+                if(saved) {
+                    completedSteps = new Set(JSON.parse(saved));
+                    let percent = Math.min(100, Math.floor((completedSteps.size / 15) * 100));
+                    document.getElementById('progress-bar').style.width = percent + '%';
+                    document.getElementById('progress-text').innerText = percent + '%';
+                    
+                    // Restore builder data
+                    let bData = JSON.parse(localStorage.getItem('dp_builder') || '{}');
+                    if(bData.nama) {
+                        document.getElementById('b-nama').value = bData.nama;
+                        document.getElementById('b-peran').value = bData.peran || '';
+                        document.getElementById('b-bio').value = bData.bio || '';
+                        document.getElementById('b-skill').value = bData.skill || '';
+                        document.getElementById('b-kontak').value = bData.kontak || '';
+                        updatePreview();
+                    }
+                }
+            } catch(e) {}
+        }
+
+        // --- SPECIFIC PAGE LOGIC ---
+        function markDone(id) {
+            document.getElementById(id).style.borderLeft = "4px solid var(--cyan)";
+            document.getElementById(id).querySelector('.btn').innerText = "Selesai ✓";
+            showToast("Materi ditandai selesai");
+            updateProgress(id);
+        }
+
+        function checkAnalysis() {
+            let chk1 = document.getElementById('chk1').checked;
+            let chk2 = document.getElementById('chk2').checked;
+            let chk3 = document.getElementById('chk3').checked;
+            let chk4 = document.getElementById('chk4').checked;
+            let chk5 = document.getElementById('chk5').checked; // Pengecoh
+
+            if(chk1 && chk2 && chk3 && chk4 && !chk5) {
+                document.getElementById('analysis-result').innerText = "Luar Biasa! Analisismu tajam dan tepat. Kamu berhasil menemukan semua masalah keamanan dan profesionalisme.";
+                document.getElementById('analysis-result').style.color = "#00FF00";
+                updateProgress('analysis_done');
+            } else {
+                document.getElementById('analysis-result').innerText = "Hampir tepat. Periksa lagi! (Tips: Abaikan alasan warna, fokus pada konten data, klaim, dan struktur).";
+                document.getElementById('analysis-result').style.color = "#FF4444";
+            }
+        }
+
+        function updatePreview() {
+            let getVal = (id) => document.getElementById(id).value || `[${id.replace('b-','')}]`;
+            
+            document.getElementById('pv-nama').innerText = document.getElementById('b-nama').value || 'Nama Kamu';
+            document.getElementById('pv-peran').innerText = document.getElementById('b-peran').value || 'Bidang Minat Profesional';
+            document.getElementById('pv-bio').innerText = document.getElementById('b-bio').value || 'Deskripsi singkat tentang dirimu...';
+            document.getElementById('pv-skill').innerText = document.getElementById('b-skill').value || 'Skill 1, Skill 2';
+            
+            document.getElementById('pv-p1-nama').innerText = document.getElementById('b-p1-nama').value || 'Judul Proyek 1';
+            document.getElementById('pv-p1-desc').innerText = document.getElementById('b-p1-desc').value || 'Deskripsi proyek...';
+            document.getElementById('pv-p2-nama').innerText = document.getElementById('b-p2-nama').value || 'Judul Proyek 2';
+            document.getElementById('pv-p2-desc').innerText = document.getElementById('b-p2-desc').value || 'Deskripsi proyek...';
+            
+            document.getElementById('pv-kontak').innerText = document.getElementById('b-kontak').value || 'kontak@email.com';
+        }
+
+        function saveBuilder() {
+            let data = {
+                nama: document.getElementById('b-nama').value,
+                peran: document.getElementById('b-peran').value,
+                bio: document.getElementById('b-bio').value,
+                skill: document.getElementById('b-skill').value,
+                kontak: document.getElementById('b-kontak').value
+            };
+            try {
+                localStorage.setItem('dp_builder', JSON.stringify(data));
+                showToast("Rancangan portofolio disimpan secara lokal!");
+                updateProgress('builder_done');
+            } catch(e) {
+                showToast("Gagal menyimpan. Browser mungkin memblokir LocalStorage.", true);
+            }
+        }
+
+        function resetBuilder() {
+            if(confirm("Yakin ingin menghapus semua isian form?")) {
+                document.querySelectorAll('#builder input, #builder textarea').forEach(el => el.value = '');
+                updatePreview();
+            }
+        }
+
+        function renderWireframe() {
+            const container = document.getElementById('wf-container');
+            container.innerHTML = '';
+            
+            wireframeBlocks.forEach((block, index) => {
+                let div = document.createElement('div');
+                div.className = 'wf-block';
+                div.innerHTML = `
+                    <span style="font-weight:bold;">${block.name}</span>
+                    <div class="wf-controls">
+                        <button onclick="moveWf(${index}, -1)" ${index === 0 ? 'disabled' : ''}>▲</button>
+                        <button onclick="moveWf(${index}, 1)" ${index === wireframeBlocks.length-1 ? 'disabled' : ''}>▼</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function moveWf(index, direction) {
+            let target = index + direction;
+            if (target < 0 || target >= wireframeBlocks.length) return;
+            
+            // Swap
+            let temp = wireframeBlocks[index];
+            wireframeBlocks[index] = wireframeBlocks[target];
+            wireframeBlocks[target] = temp;
+            renderWireframe();
+        }
+
+        function setWireframeView(type) {
+            const el = document.getElementById('wf-container');
+            el.className = 'wireframe-canvas ' + (type === 'mobile' ? 'wf-mobile' : 'wf-desktop');
+        }
+
+        function checkWireframeStructure() {
+            // Check logic: Nav -> Hero -> About/Skills -> Projects -> Contact -> Footer
+            // Simplification for student logic validation
+            let isGood = true;
+            if(wireframeBlocks[0].id !== 'wf-nav') isGood = false;
+            if(wireframeBlocks[wireframeBlocks.length-1].id !== 'wf-footer') isGood = false;
+            
+            let heroIdx = wireframeBlocks.findIndex(b => b.id === 'wf-hero');
+            let projIdx = wireframeBlocks.findIndex(b => b.id === 'wf-projects');
+            if(heroIdx > projIdx) isGood = false;
+
+            if(isGood) {
+                showToast("Struktur Wireframe Logis dan Bagus!");
+                updateProgress('wireframe_done');
+            } else {
+                showToast("Urutan kurang logis. Pastikan Navigasi di atas, Footer di bawah, dan Hero sebelum Proyek.", true);
+            }
+        }
+
+        function generateAIText() {
+            let task = document.getElementById('ai-task').value;
+            let input = document.getElementById('ai-input').value;
+            let output = document.getElementById('ai-output');
+
+            if(input.trim().length < 10) {
+                showToast("Masukkan informasi lebih detail di kolom input (minimal 10 karakter).", true);
+                return;
+            }
+
+            // Simple templating logic - simulating AI
+            let result = "";
+            if(task === 'bio') {
+                result = `Halo! Saya adalah seorang profesional dengan fokus pada bidang tersebut.\n\nMemiliki keahlian teknis yang mencakup: ${input.substring(0, 30)}...\n\nSaya berdedikasi untuk terus belajar, mengembangkan solusi teknologi yang efisien, dan berkontribusi secara positif dalam setiap proyek yang saya tangani. Tujuan utama saya adalah mengaplikasikan ilmu untuk memecahkan masalah nyata.\n\n(Edit teks ini agar sesuai gaya bahasamu dan pastikan data di atas akurat!)`;
+            } else {
+                result = `Latar Belakang Proyek:\nBerdasarkan informasi: "${input}", proyek ini dikembangkan untuk memberikan solusi teknis yang andal.\n\nPeran & Tanggung Jawab:\nSaya bertanggung jawab atas konfigurasi dan implementasi, memastikan standar keamanan dan performa terpenuhi.\n\nHasil:\nBerhasil mencapai target fungsional dengan stabilitas tinggi.\n\n(Tambahkan tool/software spesifik yang kamu gunakan, karena template ini masih bersifat umum)`;
+            }
+
+            output.value = result;
+            updateProgress('ai_done');
+        }
+
+        let quizAnswers = [];
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            
+            quizData.forEach((q, index) => {
+                let div = document.createElement('div');
+                div.style.marginBottom = "30px";
+                
+                let html = `<h4 style="margin-bottom: 10px;">${index + 1}. ${q.q}</h4>`;
+                q.options.forEach((opt, oIndex) => {
+                    html += `
+                        <label style="display: block; margin-bottom: 8px; cursor: pointer; padding: 5px; border-radius: 5px;" class="opt-label-${index}">
+                            <input type="radio" name="q${index}" value="${oIndex}"> ${opt}
+                        </label>`;
+                });
+                html += `<div id="expl-${index}" style="display:none; margin-top: 10px; padding: 10px; background: rgba(0,229,255,0.1); border-left: 3px solid var(--cyan); font-size: 13px;"></div>`;
+                div.innerHTML = html;
+                container.appendChild(div);
+            });
+
+            container.innerHTML += `<button class="btn btn-primary" onclick="submitQuiz()">Kumpulkan Jawaban</button>`;
+            container.innerHTML += `<div id="quiz-score" style="margin-top:20px; font-size: 20px; font-weight:bold; color:var(--cyan);"></div>`;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let allAnswered = true;
+
+            quizData.forEach((q, index) => {
+                let selected = document.querySelector(`input[name="q${index}"]:checked`);
+                let explDiv = document.getElementById(`expl-${index}`);
+                
+                if(!selected) {
+                    allAnswered = false;
+                    return;
+                }
+
+                let val = parseInt(selected.value);
+                explDiv.style.display = 'block';
+                
+                // Reset colors
+                document.querySelectorAll(`.opt-label-${index}`).forEach(l => l.style.background = 'transparent');
+                let parentLabel = selected.parentElement;
+
+                if(val === q.answer) {
+                    score += 10;
+                    parentLabel.style.background = 'rgba(0, 255, 0, 0.2)';
+                    explDiv.innerHTML = `<strong>Benar!</strong> ${q.expl}`;
+                    explDiv.style.borderColor = "#00FF00";
+                } else {
+                    parentLabel.style.background = 'rgba(255, 0, 0, 0.2)';
+                    explDiv.innerHTML = `<strong>Kurang tepat.</strong> ${q.expl}`;
+                    explDiv.style.borderColor = "#FF4444";
+                }
+            });
+
+            if(!allAnswered) {
+                showToast("Harap jawab semua pertanyaan terlebih dahulu!", true);
+                return;
+            }
+
+            document.getElementById('quiz-score').innerText = `Skor Akhir: ${score} / 100`;
+            updateProgress('quiz_done');
+            window.scrollTo(0, document.getElementById('quiz-score').offsetTop);
+        }
+
+        function saveReflection() {
+            if(document.getElementById('ref1').value.trim() === '') {
+                showToast("Isi setidaknya pertanyaan pertama.", true); return;
+            }
+            try {
+                localStorage.setItem('dp_reflection', 'done');
+                showToast("Refleksi berhasil disimpan. Terima kasih!");
+                updateProgress('reflection_done');
+            } catch(e) {}
+        }
+
+        function finishCourse() {
+            let checks = document.querySelectorAll('.final-check');
+            let allChecked = true;
+            checks.forEach(c => { if(!c.checked) allChecked = false; });
+
+            if(allChecked) {
+                showToast("🎉 Selamat! Kamu telah menyelesaikan modul Perancangan Portofolio Digital.");
+                updateProgress('all_done');
+            } else {
+                showToast("Centang semua checklist jika kamu benar-benar sudah menyelesaikannya.", true);
+            }
+        }
+
+        // Initialize
+        window.onload = function() {
+            loadProgress();
+        };
+
+    </script>
+</body>
+</html>
